@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procure a moeda</title>
+    <style>
+        html {
+            overflow: hidden;
+        }
+        img{
+            position: absolute;
+            filter: hue-rotate();
+        }
+        #txt {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            user-select: none;
+        }
+        canvas {
+            margin-left: -8px;
+            margin-top: -8px;
+        }
+    </style>
+</head>
+<body bgcolor="#000">
+    <img id="imgg" src="img.png" width="15" height="15">
+    <div id="txt">Descobertas: 0</div>
+    <script>
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+        var imgg = document.getElementById("imgg");
+        var points;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        document.body.appendChild(canvas);
+
+        imgg.style.marginLeft = `${Math.random() * canvas.width}px`;
+        imgg.style.marginTop = `${Math.random() * canvas.height}px`;
+        imgg.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+
+        window.onload = function() {
+            points = window.localStorage.getItem("points");
+            var txt = document.getElementById("txt").innerHTML = `<div id="txt">Descobertas:${points}</div>`;
+        }
+
+        imgg.onclick = () => {
+            points++;
+            window.localStorage.setItem("points", points);
+            window.location.reload();
+        }
+
+        for(var x = 0; x < 512; x++) {
+            for(var y = 0; y < 512; y++) {
+                ctx.fillStyle = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+                ctx.fillRect(x * 3, y * 3, canvas.width, canvas.height);
+            }
+        }
+    </script>
+</body>
+</html>
